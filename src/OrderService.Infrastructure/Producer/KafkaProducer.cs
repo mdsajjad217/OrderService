@@ -1,5 +1,7 @@
 ﻿using Confluent.Kafka;
+using Microsoft.Extensions.Options;
 using OrderService.Application.Event;
+using OrderService.Application.Option;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -11,16 +13,18 @@ namespace OrderService.Infrastructure.Producer
     {
         private readonly IProducer<string, string> _producer;
 
-        public KafkaProducer()
+        public KafkaProducer(IOptions<KafkaProducerOptions> options)
         {
+            var kafka = options.Value;
+
             var config = new ProducerConfig
             {
-                BootstrapServers = "localhost:9092",
-                Acks = Acks.All,
-                EnableIdempotence = true,
-                MessageSendMaxRetries = 3,
-                RetryBackoffMs = 100,
-                LingerMs = 5
+                BootstrapServers = kafka.BootstrapServers,
+                Acks = Enum.Parse<Acks>(kafka.Acks, true),
+                EnableIdempotence = kafka.EnableIdempotence,
+                MessageSendMaxRetries = kafka.MessageSendMaxRetries,
+                RetryBackoffMs = kafka.RetryBackoffMs,
+                LingerMs = kafka.LingerMs
             };
 
             _producer = new ProducerBuilder<string, string>(config).Build();

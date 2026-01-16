@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
-namespace OrderService.Domain.Event
+namespace OrderService.Application.Command
 {
-    public class OrderCreatedEvent
+    public class CreateOrderCommand
     {
-        public Guid OrderId { get; set; }
         public string ProductName { get; set; }
         public decimal Amount { get; set; }
-        public DateTime CreatedAt { get; set; }
     }
 }
