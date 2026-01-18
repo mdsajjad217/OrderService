@@ -19,8 +19,7 @@ namespace OrderService.Infrastructure.OrderRepository
 
         public async Task SaveAsync(Order order)
         {
-            await _context.Orders.AddAsync(order);
-            await _context.SaveChangesAsync();
+            await _context.Orders.AddAsync(order);            
         }
     }
 }
