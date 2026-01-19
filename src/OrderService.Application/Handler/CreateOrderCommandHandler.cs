@@ -1,6 +1,4 @@
 ﻿using OrderService.Application.Command;
-using OrderService.Application.Event;
-using OrderService.Application.Repository;
 using OrderService.Application.Service;
 using OrderService.Domain.Entity;
 using OrderService.Domain.Event;

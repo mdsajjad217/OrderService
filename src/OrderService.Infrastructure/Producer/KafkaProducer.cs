@@ -1,7 +1,7 @@
 ﻿using Confluent.Kafka;
 using Microsoft.Extensions.Options;
-using OrderService.Application.Event;
-using OrderService.Application.Option;
+using OrderService.Domain.Option;
+using OrderService.Infrastructure.Event;
 using System;
 using System.Collections.Generic;
 using System.Text;

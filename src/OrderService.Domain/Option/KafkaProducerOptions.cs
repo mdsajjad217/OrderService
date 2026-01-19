@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OrderService.Application.Option
+namespace OrderService.Domain.Option
 {
     public class KafkaProducerOptions
     {

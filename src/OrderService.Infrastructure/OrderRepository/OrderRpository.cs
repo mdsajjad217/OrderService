@@ -1,5 +1,4 @@
-﻿using OrderService.Application.Repository;
-using OrderService.Domain.Entity;
+﻿using OrderService.Domain.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;

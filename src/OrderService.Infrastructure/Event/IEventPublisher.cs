@@ -1,4 +1,4 @@
-﻿namespace OrderService.Application.Event
+﻿namespace OrderService.Infrastructure.Event
 {
     public interface IEventPublisher
     {
