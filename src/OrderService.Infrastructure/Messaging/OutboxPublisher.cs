@@ -7,13 +7,11 @@ using OrderService.Infrastructure.Event;
 public class OutboxPublisher : BackgroundService
 {
     private readonly IServiceScopeFactory _scopeFactory;
-    private readonly IEventPublisher _producer;
 
     public OutboxPublisher(
-        IServiceScopeFactory scopeFactory, IEventPublisher producer)
+        IServiceScopeFactory scopeFactory)
     {
         _scopeFactory = scopeFactory;
-        _producer = producer;
     }
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -22,12 +20,12 @@ public class OutboxPublisher : BackgroundService
         {
             using var scope = _scopeFactory.CreateScope();
             var db = scope.ServiceProvider.GetRequiredService<OrderDbContext>();
-
+            var producer = scope.ServiceProvider.GetRequiredService<IEventPublisher>();
             var messages = db.OutboxMessages.Where(x => !x.IsPublished).Take(10).ToList();
 
             foreach (var msg in messages)
             {
-                await _producer.PublishAsync("order-created", msg.Payload);
+                await producer.PublishAsync("order-created", msg.Payload);
                 msg.IsPublished = true;
             }
 

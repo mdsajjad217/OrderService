@@ -17,7 +17,7 @@ public class OrdersController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> Create(CreateOrderCommand command)
+    public async Task<IActionResult> Create([FromBody] CreateOrderCommand command)
     {
         var orderId = await _handler.Handle(command);
         return Ok(orderId);

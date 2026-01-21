@@ -9,11 +9,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace OrderService.Application.Service
 {
-    public class OrderService : IOrderService
+    public class OrderingService : IOrderService
     {
         private readonly IOrderRepository _orderRepository;
         private readonly IOutboxRepository _outboxRepository;
@@ -21,7 +22,7 @@ namespace OrderService.Application.Service
         private readonly IEventPublisher _eventPublisher;
         private readonly OrderDbContext _context;
 
-        public OrderService(IOrderRepository orderRepository, IOutboxRepository outboxRepository,
+        public OrderingService(IOrderRepository orderRepository, IOutboxRepository outboxRepository,
             IEventPublisher eventPublisher, OrderDbContext context)
         {
             _orderRepository = orderRepository;
@@ -34,6 +35,13 @@ namespace OrderService.Application.Service
         {
             try
             {
+                JsonSerializerOptions JsonOptions =
+            new()
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                PropertyNameCaseInsensitive = true,
+                Converters = { new JsonStringEnumConverter() }
+            };
                 await _orderRepository.SaveAsync(order);
 
                 var evt = new OrderCreatedEvent
@@ -48,7 +56,7 @@ namespace OrderService.Application.Service
                 {
                     Id = Guid.NewGuid(),
                     Type = nameof(OrderCreatedEvent),
-                    Payload = JsonSerializer.Serialize(evt),
+                    Payload = JsonSerializer.Serialize(evt, JsonOptions),
                     OccurredOn = DateTime.UtcNow,
                     IsPublished = false
                 });

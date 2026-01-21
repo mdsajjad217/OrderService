@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace OrderService.Infrastructure.OrderRepository
 {
-    public class OrderRpository : IOrderRepository
+    public class OrderRepository : IOrderRepository
     {
         OrderDbContext _context;
 
-        public OrderRpository(OrderDbContext context)
+        public OrderRepository(OrderDbContext context)
         {
             _context = context;
         }
