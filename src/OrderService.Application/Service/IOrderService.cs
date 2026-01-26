@@ -10,5 +10,6 @@ namespace OrderService.Application.Service
     public interface IOrderService
     {
         Task SaveAsync(Order order);
+        Task<List<Order>> GetAsync();
     }
 }

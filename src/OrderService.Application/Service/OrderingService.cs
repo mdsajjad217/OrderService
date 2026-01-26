@@ -68,5 +68,17 @@ namespace OrderService.Application.Service
                 throw;
             }
         }
+
+        public async Task<List<Order>> GetAsync()
+        {
+            try
+            {
+                return await _orderRepository.GetAsync();
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
     }
 }

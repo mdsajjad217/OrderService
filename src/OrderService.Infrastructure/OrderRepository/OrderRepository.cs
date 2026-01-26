@@ -1,4 +1,5 @@
-﻿using OrderService.Domain.Entity;
+﻿using Microsoft.EntityFrameworkCore;
+using OrderService.Domain.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +19,12 @@ namespace OrderService.Infrastructure.OrderRepository
 
         public async Task SaveAsync(Order order)
         {
-            await _context.Orders.AddAsync(order);            
+            await _context.Orders.AddAsync(order);
+        }
+
+        public async Task<List<Order>> GetAsync()
+        {
+            return await _context.Orders.ToListAsync();
         }
     }
 }

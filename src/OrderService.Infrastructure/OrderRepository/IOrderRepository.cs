@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OrderService.Domain.Entity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,7 @@ namespace OrderService.Infrastructure.OrderRepository
 {
     public interface IOrderRepository
     {
-        Task SaveAsync(Domain.Entity.Order order);
+        Task SaveAsync(Order order);
+        Task<List<Order>> GetAsync();
     }
 }

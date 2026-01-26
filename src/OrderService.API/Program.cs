@@ -30,6 +30,7 @@ builder.Services.Configure<KafkaProducerOptions>(
 );
 
 builder.Services.AddScoped<CreateOrderCommandHandler, CreateOrderCommandHandler>();
+builder.Services.AddScoped<GetOrderQueryHandler, GetOrderQueryHandler>();
 builder.Services.AddScoped<IOrderService, OrderingService>();
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddScoped<IOutboxRepository, OutboxRepository>();
@@ -48,7 +49,7 @@ builder.Services.AddHostedService<OutboxPublisher>();
 //     client.AddPolicyHandler(retryPolicy)
 //    .AddPolicyHandler(circuitBreakerPolicy)
 //    );
-builder.WebHost.UseUrls("http://0.0.0.0:8081");
+builder.WebHost.UseUrls("http://0.0.0.0:8084");
 
 var app = builder.Build();
 
