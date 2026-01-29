@@ -23,10 +23,17 @@ public class OutboxPublisher : BackgroundService
             var producer = scope.ServiceProvider.GetRequiredService<IEventPublisher>();
             var messages = db.OutboxMessages.Where(x => !x.IsPublished).Take(10).ToList();
 
-            foreach (var msg in messages)
+            try
             {
-                await producer.PublishAsync("order-created", msg.Payload);
-                msg.IsPublished = true;
+                foreach (var msg in messages)
+                {
+                    await producer.PublishAsync("order-created", msg.Payload);
+                    msg.IsPublished = true;
+                }
+            }
+            catch (Exception)
+            {
+                //if error during publish then maintain a dead letter queue or log the error
             }
 
             await db.SaveChangesAsync();
